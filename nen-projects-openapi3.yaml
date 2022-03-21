@@ -1,0 +1,238 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://data.nen.nl'
+info:
+  description: NEN Harmonized Projects. Please see https://bitbucket.org/sdo-hapi/data-models for components model
+  version: 1.1.1
+  title: Harmonized Projects for NEN
+tags:
+  - name: Projects
+    description: Projects API
+paths:
+  /projects:
+    get:
+      tags:
+        - Projects
+      summary: >-
+        List and filter projects by different query parameters ordered by date
+        desc
+      operationId: getProjectsUsingGET
+      parameters:
+        - name: lastChangeTimestampFrom
+          in: query
+          description: lastChangeTimestamp from at (i.e. 2018-01-01)
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            format: date with/without timezone or relative time to now (eg. 3d, 1w, 3m)
+        - name: lastChangeTimestampTo
+          in: query
+          description: lastChangeTimestamp to at (i.e. 2018-05-31)
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            format: date with/without timezone or relative time to now (eg. 3d, 1w, 3m)
+        - name: reference
+          in: query
+          description: project's reference, exact match. If value ends with "*" a startWith match is performed
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+        - name: stdNumber
+          in: query
+          description: project's standard or document "number", which may also contain non-numeric characters, e.g. "9001"
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+        - name: stdPartNumber
+          in: query
+          description: project's standard or document part "number", which may also contain non-numeric characters, e.g. "2B"
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+        - name: harmonizedStageCode
+          in: query
+          description: harmonizedStageCode (i.e. 60.60) cannot be used with stageCode. This will match any "CURRENT" stage, not a "CLOSED" stage.
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+        - name: stageCode
+          in: query
+          description: stageCode (i.e. 6060) cannot be used with harmonizedStageCode
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+        - name: stageDueDateFrom
+          in: query
+          description: stage dueDate From for PLANNED status (i.e. 2018-01-01)
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            format: date with/without timezone or relative time to now (eg. 3d, 1w, 3m)
+        - name: stageDueDateTo
+          in: query
+          description: stage dueDate To for PLANNED status(i.e. 2018-05-31)
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            format: date with/without timezone or relative time to now (eg. 3d, 1w, 3m)
+        - name: stageEffectiveDateFrom
+          in: query
+          description: >-
+            stage effectiveDate starting with status default CURRENT starting at
+            (i.e. 2018-01-01)
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            format: date with/without timezone or relative time to now (eg. 3d, 1w, 3m)
+        - name: stageEffectiveDateTo
+          in: query
+          description: >-
+            stage effectiveDate ending with status default CURRENT ending at
+            (i.e. 2018-05-31)
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            format: date with/without timezone or relative time to now (eg. 3d, 1w, 3m)
+        - name: stageStatus
+          in: query
+          description: >-
+            stage status (values CURRENT, CLOSED, PLANNED), default CURRENT when
+            a stage (effective, due, target) date is filled else empty
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            enum:
+              - CLOSED
+              - CURRENT
+              - PLANNED
+        - name: stageTargetDateFrom
+          in: query
+          description: stage targetDate From for PLANNED status(i.e. 2018-01-31)
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            format: date with/without timezone or relative time to now (eg. 3d, 1w, 3m)
+        - name: stageTargetDateTo
+          in: query
+          description: stage targetDate To for PLANNED status(i.e. 2018-05-31)
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            format: date with/without timezone or relative time to now (eg. 3d, 1w, 3m)
+        - name: sortBy
+          in: query
+          description: Name of the field to sort results by, e.g. "lastChangeTimestamp", "urn"
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            enum:
+              - lastChangeTimestamp
+              - urn
+        - name: page
+          in: query
+          description: page number (i.e. 5)
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          description: number of publications to return (i.e. 10)
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: committeeUrn
+          in: query
+          description: committee urn, exact 'value'. (i.e. committeeUrn=nen:committee:54158&committeeUrn=nen:committee:48138&committeeUrn=nen:committee:4559)
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: committeeDisplayName
+          in: query
+          description: committee display name, exact 'value'. (i.e. committeeDisplayName=ISO/TC%2022&committeeDisplayName=NEN/TC%2061/SC%2012)
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: projectRelationType
+          in: query
+          description: project relation type, exact 'value'. (i.e. projectRelationType=ADOPTED_FROM&projectRelationType=JOINED_WORK_ITEM&projectRelationType=VIENNA_AGREEMENT)
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: externalProjectId
+          in: query
+          description: externalProjectId (i.e. nen:proj:21494) - @NEN Not used
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad request (parameters syntax or semantics)
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/projects/{urn}':
+    get:
+      tags:
+        - Projects
+      summary: Access a specific project by its urn
+      operationId: getProjectUsingGET
+      parameters:
+        - name: urn
+          in: path
+          description: urn
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Project found
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Project not found
+components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []
