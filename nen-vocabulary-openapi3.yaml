@@ -1,9 +1,9 @@
 swagger: '2.0'
 info:
-  title: Skosmos API
+  title: NEN Vocabulary API
   version: v1
   description: >
-    The Skosmos REST API is a read-only interface to the data stored on the
+    The NEN Vocabulary REST API is a read-only interface to the data stored on the
     vocabulary server. The URL namespace is the base URL of the Skosmos instance
     followed by `/rest/v1/`. 
 
