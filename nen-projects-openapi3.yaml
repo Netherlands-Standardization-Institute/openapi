@@ -2,9 +2,9 @@ openapi: 3.0.0
 servers:
   - url: 'https://data.nen.nl'
 info:
-  description: NEN Harmonized Projects. Please see https://bitbucket.org/sdo-hapi/data-models for components model
+  description: See [SDO Harmonized Interfaces](https://bitbucket.org/sdo-hapi/) for more information about this API
   version: 1.1.1
-  title: Harmonized Projects for NEN
+  title: NEN Harmonized Projects API
 tags:
   - name: Projects
     description: Projects API
