@@ -3,7 +3,7 @@
 
 ## APIs
 - NEN Vocabulary API: This API is based on the Skosmos REST API.
-- NEN Projects API: This API is based on the [Harmonized Interface API](https://bitbucket.org/sdo-hapi/) (CEN, CENELEC, IEC & ISO).
+- NEN Harmonized Projects API: This API is based on the [Harmonized Interface API](https://bitbucket.org/sdo-hapi/) (CEN, CENELEC, IEC & ISO).
 
 Note that these APIs are currently under development.
 
