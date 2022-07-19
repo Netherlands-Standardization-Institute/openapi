@@ -1,6 +1,6 @@
 openapi: 3.0.0
 servers:
-  - url: 'https://2wderi5mvk.execute-api.eu-central-1.amazonaws.com/TestProjectsAPI'
+  - url: 'https://2wderi5mvk.execute-api.eu-central-1.amazonaws.com/prod'
 info:
   description: See [SDO Harmonized Interfaces](https://bitbucket.org/sdo-hapi/) for more information about this API
   version: 1.1.1
@@ -9,7 +9,7 @@ tags:
   - name: Projects
     description: Projects API
 paths:
-  /projects:
+  /search:
     get:
       tags:
         - Projects
