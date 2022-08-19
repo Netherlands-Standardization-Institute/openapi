@@ -25,8 +25,8 @@ info:
     wrapped data will be served using the `application/javascript` MIME type.
 
 schemes:
-  - http
-host: 35.157.143.22
+  - https
+host: data.nen.nl
 basePath: /skosmos/rest/v1
 produces:
   - application/rdf+xml
