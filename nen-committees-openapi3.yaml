@@ -1,0 +1,50 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://bsd24dv3z3.execute-api.eu-central-1.amazonaws.com/prod/'
+info:
+  description: See [SDO Harmonized Interfaces](https://bitbucket.org/sdo-hapi/) for more information about this API
+  version: 1.1.1
+  title: NEN Committees API
+tags:
+  - name: Committees
+    description: Committees API
+paths:
+  /search:
+    get:
+      tags:
+        - Committees
+      summary: Search committees
+      operationId: searchCommitteesUsingGET
+      parameters:
+        - name: q
+          in: query
+          description: the search query
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad request (parameters syntax or semantics)
+          
+  '/committees/{urn}':
+    get:
+      tags:
+        - Committees
+      summary: Retrieve a specific committee by its URN
+      operationId: getCommitteeUsingGET
+      parameters:
+        - name: urn
+          in: path
+          description: the committee URN
+          required: true
+          schema:
+            type: string
+          allowReserved: true
+      responses:
+        '200':
+          description: Committee found
+        '404':
+          description: Committee not found
