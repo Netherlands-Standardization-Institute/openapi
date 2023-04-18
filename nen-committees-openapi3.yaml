@@ -42,7 +42,6 @@ paths:
           required: true
           schema:
             type: string
-          allowReserved: true
       responses:
         '200':
           description: Committee found
