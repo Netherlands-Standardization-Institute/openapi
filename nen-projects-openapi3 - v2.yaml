@@ -1,0 +1,109 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://2wderi5mvk.execute-api.eu-central-1.amazonaws.com/prod'
+info:
+  description: See [SDO Harmonized Interfaces](https://bitbucket.org/sdo-hapi/) for more information about this API
+  version: 1.1.1
+  title: NEN Projects API
+tags:
+  - name: Projects
+    description: Projects API
+paths:
+  /search:
+    get:
+      tags:
+        - Projects
+      summary: Search projects
+      operationId: searchProjectsUsingGET
+      parameters:
+        - name: q
+          in: query
+          description: The search query
+          #required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+            default: ''
+        - name: originator
+          in: query
+          description: The acronym or name of an organization, partnership or group of SDOs from which the standard originates.
+          # example: 'ISO'
+          schema:
+            type: string
+            enum: [ISO, IEC, CEN, CENELEC, CEN/CENELEC, IEC, ISO, ISO/IEC]
+        - name: stdType
+          in: query
+          description: The "type" of a publication or project.
+          schema:
+            type: string
+            enum: [EN, IS, TR, TS] # PAS, GUIDE, WP, TEC, SRD, ENV, CR, HD, CWA, OTHER
+        - name: stdNumber
+          in: query
+          description: The document number of a standard, eg. 9001 for ISO 9001:2015. @IEC sometimes it's alphanumeric value eg. 60231B for IEC 60231B:1972.
+          #example: '9001'
+          schema:
+            type: string
+        - name: stdPartNumber
+          in: query
+          description: The "part" is actually usually a number, but not always. So we fallback to using a string.
+          #example: 1
+          schema:
+            type: string  
+        # section, fragment, edition, version are also part of the stdIdentifier
+        - name: year
+          in: query
+          description: The publication year.
+          schema:
+            type: integer
+            minimum: 1960
+        - name: sort
+          in: query
+          description: The field to sort by. Valid fields are the project reference, owner, stage, due date and publication date.
+          schema:
+            type: string   
+        - name: order
+          in: query
+          description: The sort direction, either ascending or descending.
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: asc
+        - name: size
+          in: query
+          description: The number of search results returned
+          schema:
+            type: integer
+            default: 20
+            minimum: 5
+            maximum: 100
+        - name: start
+          in: query
+          description: The number of search results returned
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad request (parameters syntax or semantics)
+          
+  '/projects/{urn}':
+    get:
+      tags:
+        - Projects
+      summary: Retrieve a specific project by its URN
+      operationId: getProjectUsingGET
+      parameters:
+        - name: urn
+          in: path
+          description: the project URN
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Project found
+        '404':
+          description: Project not found
